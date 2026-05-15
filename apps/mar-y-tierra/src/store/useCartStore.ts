@@ -37,7 +37,10 @@ export const useCartStore = create<CartState>()(
           if (existingIndex >= 0) {
             // Update quantity if perfectly matches id, variant, and notes
             const updatedItems = [...state.items];
-            updatedItems[existingIndex].quantity += newItem.quantity;
+            const itemToUpdate = updatedItems[existingIndex];
+            if (itemToUpdate) {
+              itemToUpdate.quantity += newItem.quantity;
+            }
             return { items: updatedItems, isOpen: true };
           }
           // Otherwise add as new
