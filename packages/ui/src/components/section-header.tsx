@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { type BrandTheme } from "./button";
+import { type BrandTheme } from "../button";
 
 interface SectionHeaderProps {
   restaurant: BrandTheme | "chef";
