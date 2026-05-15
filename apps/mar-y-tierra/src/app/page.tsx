@@ -255,6 +255,9 @@ function StorySection() {
     </section>
   );
 }
+interface FeaturedMenuSectionProps {
+  items: any[];
+}
 
 function FeaturedMenuSection({ items }: FeaturedMenuSectionProps) {
   if (items.length === 0) return null;
