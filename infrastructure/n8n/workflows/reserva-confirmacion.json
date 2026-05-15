@@ -1,0 +1,238 @@
+{
+  "name": "Reserva Confirmación — WhatsApp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "reservation-confirmation",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "reservation-confirmation-v2",
+      "notes": "Receives POST from Next.js API after reservation INSERT.\n\nExpected payload:\n{\n  reservationId, restaurantName, restaurantSlug,\n  clientName, clientWhatsapp, date, time, guests,\n  notes, confirmationUrl, adminWhatsapp\n}"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.reservationId }}",
+              "operation": "isNotEmpty"
+            },
+            {
+              "value1": "={{ $json.clientWhatsapp }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "validate-payload",
+      "name": "Validate Payload",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [470, 300],
+      "notes": "Validates that essential fields are present before dispatching WhatsApp messages."
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "phoneNumberId": "={{ $env.WHATSAPP_PHONE_NUMBER_ID }}",
+        "recipientPhoneNumber": "={{ $json.clientWhatsapp }}",
+        "messageType": "text",
+        "textBody": "={{ '✅ *Reserva Confirmada — ' + $json.restaurantName + '*\\n\\n👤 *Nombre:* ' + $json.clientName + '\\n📅 *Fecha:* ' + $json.date + '\\n🕐 *Hora:* ' + $json.time + '\\n👥 *Personas:* ' + $json.guests + ($json.notes ? '\\n📝 *Notas:* ' + $json.notes : '') + '\\n\\n📍 *Dirección:* Zipaquirá, Cundinamarca\\n\\n¡Te esperamos! 🍽️' }}"
+      },
+      "id": "whatsapp-client",
+      "name": "WhatsApp al Cliente",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [700, 200],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "WHATSAPP_CREDENTIAL_ID",
+          "name": "WhatsApp Business API"
+        }
+      },
+      "notes": "Sends confirmation message to the customer's WhatsApp.\nUses Meta WhatsApp Business API via n8n integration."
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "send",
+        "phoneNumberId": "={{ $env.WHATSAPP_PHONE_NUMBER_ID }}",
+        "recipientPhoneNumber": "={{ $json.adminWhatsapp }}",
+        "messageType": "text",
+        "textBody": "={{ '🔔 *Nueva Reserva — ' + $json.restaurantName + '*\\n\\n👤 ' + $json.clientName + '\\n📅 ' + $json.date + ' a las ' + $json.time + '\\n👥 ' + $json.guests + ' personas\\n📱 ' + $json.clientWhatsapp + ($json.notes ? '\\n📝 ' + $json.notes : '') + '\\n\\n🔗 ' + $json.confirmationUrl }}"
+      },
+      "id": "whatsapp-admin",
+      "name": "WhatsApp a Nicolás",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [700, 420],
+      "credentials": {
+        "whatsAppApi": {
+          "id": "WHATSAPP_CREDENTIAL_ID",
+          "name": "WhatsApp Business API"
+        }
+      },
+      "notes": "Sends reservation summary to Nicolás (admin).\nIncludes customer phone, guest count, and direct link to reservation."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ 'https://' + ($json.restaurantSlug === 'la-carreta' ? 'lacarreta.co' : $json.restaurantSlug === 'mar-y-tierra' ? 'marytierrazipa.co' : 'delicazipa.co') + '/api/webhooks/n8n' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-n8n-signature",
+              "value": "={{ 'sha256=' + $evaluateExpression(\"crypto.createHmac('sha256', $env.N8N_WEBHOOK_SECRET).update(JSON.stringify({reservationId: $json.reservationId, whatsappSent: true, adminNotified: true, timestamp: new Date().toISOString(), workflow: 'reservation_confirmation_v2'})).digest('hex')\") }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "reservationId",
+              "value": "={{ $json.reservationId }}"
+            },
+            {
+              "name": "whatsappSent",
+              "value": true
+            },
+            {
+              "name": "adminNotified",
+              "value": true
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}"
+            },
+            {
+              "name": "workflow",
+              "value": "reservation_confirmation_v2"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "callback-nextjs",
+      "name": "Callback a Next.js",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [950, 300],
+      "notes": "Calls back the origin Next.js app's webhook endpoint.\nSigns the payload with HMAC-SHA256 using N8N_WEBHOOK_SECRET.\nUpdates reservation status to 'notified' in Supabase."
+    },
+    {
+      "parameters": {},
+      "id": "error-handler",
+      "name": "Error Handler",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [700, 550],
+      "notes": "Catch path for invalid payloads.\nReservation remains 'pending' — n8n retry polling will pick it up."
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Validate Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Payload": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp al Cliente",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "WhatsApp a Nicolás",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Handler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp al Cliente": {
+      "main": [
+        [
+          {
+            "node": "Callback a Next.js",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "reservations",
+      "id": "tag-reservations"
+    },
+    {
+      "name": "whatsapp",
+      "id": "tag-whatsapp"
+    },
+    {
+      "name": "production",
+      "id": "tag-production"
+    }
+  ],
+  "meta": {
+    "instanceId": "nicolas-suarez-ops",
+    "templateCredsSetupCompleted": false
+  },
+  "pinData": {},
+  "_README": {
+    "description": "Workflow de confirmación de reservas vía WhatsApp Business API",
+    "version": "2.0",
+    "author": "nicolas-suarez-ops",
+    "envVars": [
+      "WHATSAPP_PHONE_NUMBER_ID — Meta WhatsApp Business phone number ID",
+      "N8N_WEBHOOK_SECRET — HMAC secret shared with Next.js apps",
+      "ADMIN_WHATSAPP — Nicolás's phone number (+57XXXXXXXXXX)"
+    ],
+    "flow": [
+      "1. Next.js API (POST /api/reservations) creates reservation in Supabase",
+      "2. Next.js calls sendReservationToN8N() → POST to this webhook",
+      "3. n8n validates payload → sends WhatsApp to client + admin in parallel",
+      "4. n8n calls back /api/webhooks/n8n with HMAC signature",
+      "5. Next.js updates reservation status to 'notified'"
+    ],
+    "retry": "If n8n doesn't respond in 10s, reservation stays 'pending'. n8n polls pending reservations every 60s via separate polling workflow."
+  }
+}

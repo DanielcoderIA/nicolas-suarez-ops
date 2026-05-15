@@ -1,0 +1,205 @@
+@import "tailwindcss";
+@import "@repo/ui/tokens";
+
+@source "../../../../packages/ui/src";
+
+
+/* ══════════════════════════════════════════════════════════════
+   La Carreta · globals.css
+   Las fuentes (Fraunces, DM Sans) se cargan en layout.tsx con
+   next/font/google — no se necesita @import url() aquí.
+   ══════════════════════════════════════════════════════════════ */
+
+
+/* ── Paleta cromática ─────────────────────────────────────── */
+:root {
+  --lc-primary: #7A2E1A;
+  --lc-primary-mid: #5C1F0E;
+  --lc-accent: #C9973A;
+  --lc-surface: #FDFAF5;
+  --lc-border: rgba(201, 151, 58, 0.18);
+  --lc-text: #1C1410;
+  --lc-text-muted: #7A6A58;
+
+  --lc-shadow-card: 0 1px 3px rgba(28, 20, 16, 0.04), 0 4px 12px rgba(28, 20, 16, 0.06);
+  --lc-shadow-hover: 0 4px 12px rgba(28, 20, 16, 0.08), 0 16px 32px rgba(28, 20, 16, 0.10);
+}
+
+
+/* ── Sistema de espaciado — cuadrícula base 4px ──────────── */
+:root {
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+}
+
+
+/* ── Border radius ────────────────────────────────────────── */
+:root {
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+
+/* ── Motion tokens ────────────────────────────────────────── */
+:root {
+  --ease-linear: linear;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.40, 0.00, 0.20, 1);
+  --ease-out: cubic-bezier(0.00, 0.00, 0.20, 1);
+  --ease-in: cubic-bezier(0.40, 0.00, 1.00, 1);
+  --ease-in-out: cubic-bezier(0.40, 0.00, 0.60, 1);
+
+  --dur-instant: 80ms;
+  --dur-fast: 150ms;
+  --dur-normal: 250ms;
+  --dur-slow: 400ms;
+  --dur-slower: 600ms;
+  --dur-slowest: 900ms;
+}
+
+
+/* ── Layout tokens ────────────────────────────────────────── */
+:root {
+  --bottom-nav-height: 72px;
+  --bottom-nav-offset: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+}
+
+
+/* ── @keyframes ───────────────────────────────────────────── */
+@keyframes skeleton-sweep {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+
+/* ── Base layer ───────────────────────────────────────────── */
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--lc-surface);
+    color: var(--lc-text);
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  ::selection {
+    background-color: var(--lc-accent-soft);
+    color: var(--lc-text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--lc-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+
+/* ── Components ───────────────────────────────────────────── */
+@layer components {
+  .skeleton {
+    background: linear-gradient(90deg,
+        var(--lc-surface) 0%,
+        var(--lc-border) 40%,
+        var(--lc-surface) 80%);
+    background-size: 200% 100%;
+    animation: skeleton-sweep var(--dur-slower) var(--ease-smooth) infinite;
+    border-radius: var(--radius-md);
+  }
+
+  .pb-bottom-nav {
+    padding-bottom: var(--bottom-nav-offset);
+  }
+
+  @media (min-width: 768px) {
+    .pb-bottom-nav {
+      padding-bottom: 0;
+    }
+  }
+
+  .sticky-cta {
+    position: fixed;
+    bottom: calc(var(--bottom-nav-offset) + var(--space-4));
+    inset-inline: var(--space-4);
+    z-index: 40;
+  }
+
+  @media (min-width: 768px) {
+    .sticky-cta {
+      display: none;
+    }
+  }
+}
+
+
+/* ── Accesibilidad ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --lc-border: #8a7060;
+    --lc-text-muted: #4a3828;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+  }
+}
+ 
+ a.bg-\[\#7A2E1E\] {
+   background-color: #C8932A !important;
+   color: #1C0A00 !important;
+   border: none !important;
+   outline: none !important;
+   padding: 14px 28px !important;
+   font-size: 11px !important;
+   letter-spacing: 0.12em !important;
+ }

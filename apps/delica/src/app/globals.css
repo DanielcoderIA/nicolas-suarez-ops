@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400&display=swap");
+@import "tailwindcss";
+@import "@repo/ui/tokens";
+
+/* Tailwind v4: scan shared UI components for utilities */
+@source "../../../../packages/ui/src";
+
+/* ── Delica · Brand Tokens ────────────────────────────────────
+   Complements tokens.css .theme-delica scope.
+   Rules: NUNCA border-radius > 2–4px · Cormorant 300 o italic
+   Motion: smooth/sharp only. NUNCA spring bounce.            */
+:root {
+  --dl-primary:   #1e100a;
+  --dl-primary2:  #2C1810;
+  --dl-accent:    #8D6A32;
+  --dl-accent2:    #b8894a;
+  --dl-surface:   #FAFAF8;
+  --dl-border:    rgba(141, 106, 50, 0.12);
+  --dl-text-dark: #2C1810;
+
+  /* Brand shadows — máxima sobriedad */
+  --dl-shadow-card:  0 2px 12px rgba(0, 0, 0, 0.18), 0 1px 3px rgba(0, 0, 0, 0.12);
+  --dl-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.14);
+  --dl-shadow-lift:  0 8px 32px rgba(0, 0, 0, 0.38), 0 4px 10px rgba(0, 0, 0, 0.18);
+
+  /* Motion — smooth/sharp ONLY */
+  --dur-slow:      500ms;
+  --dur-cinematic: 800ms;
+}
+
+/* ── Reduced Motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Bottom nav safe area padding helper ───────────────────── */
+.pb-bottom-nav {
+  padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 768px) {
+  .pb-bottom-nav {
+    padding-bottom: 0;
+  }
+}

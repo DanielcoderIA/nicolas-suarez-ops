@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/* ── Chef · Nicolás Suárez · Design Tokens ──────────────────── */
+:root {
+  /* Neutral professional palette — bridges all 3 restaurant brands */
+  --chef-bg: #0D1B2A;
+  --chef-surface: #1B2838;
+  --chef-border: rgba(255, 255, 255, 0.08);
+  --chef-text: #e8eaed;
+  --chef-text2: #9aa0ac;
+  --chef-accent: #8D6A32;
+  --chef-accent2: #b8894a;
+
+  /* Shadows */
+  --chef-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --chef-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  /* Motion */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-instant: 100ms;
+  --dur-normal: 300ms;
+  --dur-slow: 500ms;
+}
+
+/* ── Base Reset ────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--chef-text);
+  background-color: var(--chef-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Focus Visible ─────────────────────────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--chef-bg), 0 0 0 4px var(--chef-accent);
+}
+
+/* ── Reduced Motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -3,12 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    ".": "./src/index.ts",
+    "./button": "./src/button.tsx",
+    "./card": "./src/card.tsx",
+    "./input": "./src/input.tsx",
+    "./badge": "./src/badge.tsx",
+    "./custom-image": "./src/custom-image.tsx",
+    "./navbar": "./src/navbar.tsx",
+    "./hero-section": "./src/hero-section.tsx",
+    "./menu-card": "./src/menu-card.tsx",
+    "./reservation-form": "./src/reservation-form.tsx",
+    "./footer": "./src/footer.tsx",
+    "./tokens": "./src/tokens.css",
+    "./hooks/useAnalytics": "./src/hooks/useAnalytics.ts",
+    "./hooks/useLoyalty": "./src/hooks/useLoyalty.ts",
+    "./components/LoyaltyTracker": "./src/components/LoyaltyTracker.tsx",
     "./*": "./src/*.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
