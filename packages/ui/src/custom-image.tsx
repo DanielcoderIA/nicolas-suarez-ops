@@ -35,6 +35,8 @@ export interface CustomImageProps
   aspectRatio?: string;
   /** Priority loading (for LCP images) */
   priority?: boolean;
+  /** Fill the parent container (absolute positioning) */
+  fill?: boolean;
 }
 
 /**
@@ -94,6 +96,7 @@ export function CustomImage({
   quality = 85,
   aspectRatio = "4/3",
   priority = false,
+  fill = false,
   className = "",
   style,
   ...props
@@ -114,9 +117,20 @@ export function CustomImage({
       fetchPriority={priority ? "high" : "auto"}
       className={`object-cover ${className}`}
       style={{
-        aspectRatio,
-        maxWidth: "100%",
-        height: "auto",
+        ...(fill ? {
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          objectFit: 'cover',
+        } : {
+          aspectRatio,
+          maxWidth: "100%",
+          height: "auto",
+        }),
         ...style,
       }}
       {...props}

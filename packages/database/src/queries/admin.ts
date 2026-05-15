@@ -7,7 +7,7 @@
 
 import { getServerSupabase } from "../server";
 import { assertRestaurantId } from "../helpers/rls";
-import type { MenuItem, Reservation, ReservationStatus, Database } from "../types";
+import type { MenuItem, Reservation, ReservationStatus, Database, LoyalVisit, AnalyticsEvent } from "../types";
 // DbClient is no longer used, we use ReturnType<typeof getServerSupabase> directly in parameters.
 
 /**
@@ -155,12 +155,12 @@ export async function getAdminAnalyticsEvents(
 export async function getAdminLoyaltyStats(
   supabase: ReturnType<typeof getServerSupabase>,
   restaurantId: string
-) {
+): Promise<Pick<LoyalVisit, "visit_count" | "cookie_hash">[]> {
   assertRestaurantId(restaurantId);
 
   const { data, error } = await supabase
     .from("loyal_visits")
-    .select("visit_count")
+    .select("visit_count, cookie_hash")
     .eq("restaurant_id", restaurantId);
 
   if (error) {

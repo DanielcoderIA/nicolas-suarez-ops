@@ -82,7 +82,7 @@ export function MenuContent({ menuItems, categories }: MenuContentProps) {
           const hasPhotos = group.items.some((item) => item.photo_url);
 
           return (
-            <ScrollReveal key={group.category} delay={`${Math.min(i * 80, 400)}ms`}>
+            <ScrollReveal key={group.category} delay={Math.min(i * 80, 400)}>
               {/* Section divider — only between sections, not before the first */}
               {i > 0 && (
                 <div className="flex items-center gap-5 my-16 md:my-20">

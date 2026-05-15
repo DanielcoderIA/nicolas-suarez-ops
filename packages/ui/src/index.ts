@@ -31,7 +31,6 @@ export { ReservationForm } from "./reservation-form";
 export type {
   ReservationFormProps,
   ReservationData,
-  ReservationRestaurant,
 } from "./reservation-form";
 
 export { Footer } from "./footer";

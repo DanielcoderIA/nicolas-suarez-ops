@@ -41,7 +41,9 @@ function formatDate(dateStr: string) {
 }
 
 function formatTime(timeStr: string) {
-  const [h, m] = timeStr.split(":");
+  const parts = timeStr.split(":");
+  const h = parts[0] ?? "0";
+  const m = parts[1] ?? "00";
   const hour = parseInt(h);
   const ampm = hour >= 12 ? "pm" : "am";
   const display = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
@@ -628,7 +630,7 @@ export default function ReservationsClient({
                     border: "1px solid var(--border)",
                   }}
                 >
-                  {grouped[date].length}
+                  {grouped[date]?.length}
                 </span>
               </div>
 
@@ -640,7 +642,7 @@ export default function ReservationsClient({
                   gap: 12,
                 }}
               >
-                {grouped[date].map((res) => (
+                {grouped[date]?.map((res) => (
                   <ReservationCard
                     key={res.id}
                     res={res}
