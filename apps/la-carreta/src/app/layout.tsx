@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Cormorant_Garamond } from "next/font/google";
-import { BottomNav } from "@repo/ui";
+import { BottomNav, LoyaltyTracker } from "@repo/ui";
 import "./globals.css";
 
 /* ── Fuentes ────────────────────────────────────────────────────────
@@ -115,6 +115,12 @@ export default function RootLayout({
       <body className="theme-la-carreta antialiased">
         {children}
         <BottomNav restaurant="la-carreta" />
+        <LoyaltyTracker
+          restaurantId={process.env.NEXT_PUBLIC_RESTAURANT_ID!}
+          analyticsToken={process.env.NEXT_PUBLIC_ANALYTICS_TOKEN!}
+          supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL!}
+          supabaseAnonKey={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}
+        />
       </body>
     </html>
   );

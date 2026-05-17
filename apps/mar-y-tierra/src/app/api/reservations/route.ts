@@ -79,7 +79,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("[POST /api/reservations] Error:", error);
     return NextResponse.json(
-      { error: "Internal server error processing reservation." },
+      { error: "Internal server error processing reservation.", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

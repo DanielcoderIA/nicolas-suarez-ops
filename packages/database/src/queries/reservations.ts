@@ -3,7 +3,7 @@
  * All queries enforce restaurant_id scoping.
  */
 
-import { getPublicSupabase } from "../client";
+import { getPublicSupabase, getServiceSupabase } from "../client";
 import { assertRestaurantId } from "../helpers/rls";
 import type { Reservation, ReservationInsert, ReservationStatus } from "../types";
 
@@ -19,7 +19,7 @@ export async function createReservation(
 ): Promise<Reservation> {
   assertRestaurantId(payload.restaurant_id);
 
-  const supabase = getPublicSupabase();
+  const supabase = getServiceSupabase();
 
   // Destructure `status` out of payload so it doesn't conflict with the
   // explicit override below — avoids the TS duplicate-key / type mismatch error.

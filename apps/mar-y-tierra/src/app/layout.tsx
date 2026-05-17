@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Libre_Baskerville } from "next/font/google";
-import { BottomNav } from "@repo/ui";
+import { BottomNav, LoyaltyTracker } from "@repo/ui";
 import "./globals.css";
 
 /**
@@ -60,6 +60,12 @@ export default function RootLayout({
       >
         {children}
         <BottomNav restaurant="mar-y-tierra" />
+        <LoyaltyTracker
+          restaurantId={process.env.NEXT_PUBLIC_RESTAURANT_ID!}
+          analyticsToken={process.env.NEXT_PUBLIC_ANALYTICS_TOKEN!}
+          supabaseUrl={process.env.NEXT_PUBLIC_SUPABASE_URL!}
+          supabaseAnonKey={process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}
+        />
       </body>
     </html>
   );

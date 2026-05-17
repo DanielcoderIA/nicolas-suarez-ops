@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Footer, NavBar } from "@repo/ui";
 import { MenuContent } from "@/components/MenuContent";
+import { CartWidget } from "@/components/CartWidget";
+import { CheckoutSheet } from "@/components/CheckoutSheet";
 
 export const revalidate = 5;
 
@@ -140,6 +142,9 @@ export default function MenuPage() {
           { label: "Reservas", href: "/reservas" },
         ]}
       />
+
+      <CartWidget />
+      <CheckoutSheet />
     </div>
   );
 }

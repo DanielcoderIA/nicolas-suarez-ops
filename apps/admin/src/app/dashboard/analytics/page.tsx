@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { getServerSupabase, getAdminProfile } from "@repo/database/server";
+import { getServerSupabase, getAdminProfile, getAdminSupabase } from "@repo/database/server";
 import { redirect } from "next/navigation";
 import { getAdminAnalyticsEvents, getAdminLoyaltyStats, getAdminMenu } from "@repo/database/queries/admin";
 import {
@@ -49,9 +49,10 @@ export default async function AnalyticsPage({
     );
   }
 
+  const adminSupabase = getAdminSupabase();
   const [events, loyaltyStats, menuItems] = await Promise.all([
-    getAdminAnalyticsEvents(supabase, selectedRestaurant, 30),
-    getAdminLoyaltyStats(supabase, selectedRestaurant),
+    getAdminAnalyticsEvents(adminSupabase, selectedRestaurant, 30),
+    getAdminLoyaltyStats(adminSupabase, selectedRestaurant),
     getAdminMenu(supabase, selectedRestaurant),
   ]);
 
@@ -208,10 +209,10 @@ export default async function AnalyticsPage({
         }}
       >
         {[
-          { label: "Tráfico (30d)", value: trafficCount, icon: Activity, color: "var(--accent)", bg: "var(--accent-dim)", border: "rgba(79,142,247,0.18)" },
-          { label: "% Retorno", value: `${returnRate}%`, icon: TrendingUp, color: "var(--success)", bg: "var(--success-bg)", border: "var(--success-border)" },
-          { label: "Visitas prom.", value: avgVisits, icon: Users, color: "var(--warning)", bg: "var(--warning-bg)", border: "var(--warning-border)" },
-          { label: "Platos vistos", value: menuViews.length, icon: Eye, color: "var(--dl)", bg: "var(--dl-bg)", border: "var(--dl-border)" },
+          { label: "Visitas totales", value: trafficCount, icon: Activity, color: "var(--accent)", bg: "var(--accent-dim)", border: "rgba(79,142,247,0.18)" },
+          { label: "Clientes que vuelven", value: `${returnRate}%`, icon: TrendingUp, color: "var(--success)", bg: "var(--success-bg)", border: "var(--success-border)" },
+          { label: "Visitas por persona", value: avgVisits, icon: Users, color: "var(--warning)", bg: "var(--warning-bg)", border: "var(--warning-border)" },
+          { label: "Interés en platos", value: menuViews.length, icon: Eye, color: "var(--dl)", bg: "var(--dl-bg)", border: "var(--dl-border)" },
         ].map(({ label, value, icon: Icon, color, bg, border }) => (
           <AnalyticsStatCard key={label} label={label} value={value} icon={<Icon size={14} />} valueColor={color} accent={bg} accentBorder={border} />
         ))}
@@ -238,8 +239,8 @@ export default async function AnalyticsPage({
             iconColor="var(--accent)"
             iconBg="var(--accent-dim)"
             iconBorder="rgba(79,142,247,0.18)"
-            title="Platos más vistos"
-            sub="Top 5 · popularidad"
+            title="Lo que más miran"
+            sub="Los 5 platos más populares"
           />
           {topDishes.length === 0 ? (
             <EmptyChart icon={<Eye size={20} />} label="Sin datos suficientes" />
@@ -281,13 +282,13 @@ export default async function AnalyticsPage({
               iconColor="var(--warning)"
               iconBg="var(--warning-bg)"
               iconBorder="var(--warning-border)"
-              title="Actividad por hora"
-              sub="Distribución de visitas"
+              title="¿A qué hora entran?"
+              sub="Movimiento durante el día"
             />
             {peakHour !== "--" && (
               <div style={{ textAlign: "right", flexShrink: 0 }}>
                 <p style={{ fontSize: 10, fontWeight: "var(--font-weight-bold)", textTransform: "uppercase", letterSpacing: "var(--tracking-wider)", color: "var(--text-4)", marginBottom: 4 }}>
-                  Hora pico
+                  Hora pico (Más visitas)
                 </p>
                 <span
                   style={{
@@ -364,8 +365,8 @@ export default async function AnalyticsPage({
             iconColor="var(--danger)"
             iconBg="var(--danger-bg)"
             iconBorder="var(--danger-border)"
-            title="Fidelización pasiva"
-            sub="Retención · Cookies"
+            title="Fidelidad de clientes"
+            sub="Clientes que regresan sin registrarse"
           />
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <span
@@ -394,10 +395,10 @@ export default async function AnalyticsPage({
           }}
         >
           {[
-            { label: "Visitantes únicos", value: totalVisitors, color: "var(--accent)" },
-            { label: "Recurrentes", value: returningVisitors, color: "var(--success)" },
-            { label: "Tasa de retorno", value: `${returnRate}%`, color: "var(--warning)" },
-            { label: "Visitas prom.", value: avgVisits, color: "var(--info)" },
+            { label: "Clientes únicos", value: totalVisitors, color: "var(--accent)" },
+            { label: "Clientes recurrentes", value: returningVisitors, color: "var(--success)" },
+            { label: "% Clientes fieles", value: `${returnRate}%`, color: "var(--warning)" },
+            { label: "Visitas promedio", value: avgVisits, color: "var(--info)" },
           ].map(({ label, value, color }) => (
             <div
               key={label}
@@ -424,7 +425,7 @@ export default async function AnalyticsPage({
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
               <TrendingUp size={13} style={{ color: "var(--success)" }} />
               <span style={{ fontSize: 10, fontWeight: "var(--font-weight-bold)", textTransform: "uppercase", letterSpacing: "var(--tracking-wider)", color: "var(--text-3)" }}>
-                Ranking de frecuencia
+                Clientes más fieles (Cuadro de honor)
               </span>
               <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
             </div>
@@ -462,7 +463,7 @@ export default async function AnalyticsPage({
                           {v.cookie_hash.substring(0, 14)}…
                         </span>
                         <span style={{ fontSize: "var(--text-xs)", fontWeight: "var(--font-weight-bold)", color: "var(--text-2)", flexShrink: 0 }}>
-                          {v.visit_count} visitas
+                          {v.visit_count} visitas registradas
                         </span>
                       </div>
                       <div style={{ height: 2, background: "rgba(255,255,255,0.05)", borderRadius: "var(--radius-full)", overflow: "hidden" }}>

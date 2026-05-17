@@ -75,9 +75,7 @@ function CustomHero() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </a>
             <a
-              href={WHATSAPP_DELIVERY}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/menu"
               className="inline-flex items-center gap-3 no-underline transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl"
               style={{ color: TEAL, border: `2px solid ${TEAL}`, fontSize: '11px', fontWeight: '600', letterSpacing: '0.15em', textTransform: 'uppercase', padding: '14px 36px', borderRadius: '9999px', backgroundColor: 'rgba(26,188,156,0.08)' }}
             >
@@ -391,7 +389,7 @@ function ExperienceStrip() {
           🍽️ Reservar Mesa
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
         </a>
-        <a href={WHATSAPP_DELIVERY} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 no-underline transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl" style={{ color: TEAL, border: `2px solid ${TEAL}`, fontSize: '11px', fontWeight: '600', letterSpacing: '0.15em', textTransform: 'uppercase', padding: '14px 36px', borderRadius: '9999px', backgroundColor: 'rgba(26,188,156,0.08)' }}>
+        <a href="/menu" className="inline-flex items-center gap-3 no-underline transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl" style={{ color: TEAL, border: `2px solid ${TEAL}`, fontSize: '11px', fontWeight: '600', letterSpacing: '0.15em', textTransform: 'uppercase', padding: '14px 36px', borderRadius: '9999px', backgroundColor: 'rgba(26,188,156,0.08)' }}>
           🛵 Pedir Domicilio
         </a>
       </div>

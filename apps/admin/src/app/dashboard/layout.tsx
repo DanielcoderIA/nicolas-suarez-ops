@@ -506,7 +506,10 @@ function MobileBottomNav({ pathname }: { pathname: string }) {
       style={{
         padding: `8px 16px max(12px, env(safe-area-inset-bottom, 12px))`,
         zIndex: 50,
-        position: "relative",
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
       }}
     >
       <div

@@ -279,6 +279,12 @@ export function CheckoutSheet() {
           font-weight: 600 !important;
           color: rgba(240,244,248,0.5) !important;
         }
+
+        @media (max-width: 768px) {
+          .mobile-footer-padding {
+            padding: 20px 24px 85px 24px !important;
+          }
+        }
       `}</style>
 
       {/* ── Backdrop ─────────────────────────────────────────── */}
@@ -551,7 +557,7 @@ export function CheckoutSheet() {
         {/* ── FOOTER ─────────────────────────────────────────── */}
         {hasItems && (
           <footer
-            className="flex-none"
+            className="flex-none mobile-footer-padding"
             style={{ 
               borderTop: `1px solid ${C.border}`,
               padding: '24px 40px 40px 40px'

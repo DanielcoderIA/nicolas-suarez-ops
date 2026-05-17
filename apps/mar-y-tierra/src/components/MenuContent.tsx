@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { ScrollReveal } from "@repo/ui";
 import { MenuCategoryFilter } from "@/components/MenuCategoryFilter";
-import { CartWidget } from "@/components/CartWidget";
-import { CheckoutSheet } from "@/components/CheckoutSheet";
 import { useCartStore } from "@/store/useCartStore";
 import {
   MENU_ITEMS,
@@ -306,9 +304,6 @@ export function MenuContent() {
           </div>
         )}
       </div>
-
-      <CartWidget />
-      <CheckoutSheet />
     </>
   );
 }

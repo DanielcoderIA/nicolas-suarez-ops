@@ -236,6 +236,7 @@ export function NavBar({
               <a 
                 href={ctaHref} 
                 className={`${ctaStyles[restaurant]} no-underline inline-flex items-center justify-center gap-2`}
+                style={ctaInlineStyles[restaurant]}
                 onClick={() => setOpen(false)}
               >
                 {ctaLabel}
