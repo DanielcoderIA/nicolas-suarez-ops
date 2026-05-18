@@ -48,7 +48,7 @@ function CustomHero() {
           {/* Eyebrow */}
           <p className="flex items-center gap-3 mb-4 font-['DM_Sans',sans-serif] text-[11px] font-medium tracking-[0.22em] uppercase" style={{ color: TEAL }}>
             <span className="block w-8 h-px" style={{ backgroundColor: TEAL }} aria-hidden="true" />
-            Zipaquirá · Un lugar tropical en medio de la sabana
+            Zipaquirá · Un ambiente tropical en medio de la sabana.
           </p>
 
           {/* Title */}
@@ -107,12 +107,12 @@ function InfoBand() {
   const columns = [
     {
       num: "01", label: "Ubicación",
-      main: "Carrera 8 # 3-12", sub: "Centro · Zipaquirá",
+      main: "Cra. 6 #1-17", sub: "Centro · Zipaquirá",
       icon: <><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" /></>
     },
     {
       num: "02", label: "Hoy abierto",
-      main: "12:00 — 21:00", sub: "Lunes a Jueves",
+      main: "11:00 am — 7:00 pm", sub: "Lunes a Domingo",
       icon: <><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></>
     },
     {
@@ -369,16 +369,14 @@ function ExperienceStrip() {
       </div>
 
       {/* Hours Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 w-full z-10" style={{ maxWidth: '860px', border: `1px solid rgba(26,188,156,0.12)`, borderRadius: '2px' }}>
+      <div className="grid grid-cols-1 w-full z-10" style={{ maxWidth: '520px', border: `1px solid rgba(26,188,156,0.12)`, borderRadius: '2px' }}>
         {[
-          { label: "Lunes a Jueves", hours: "12:00 – 21:00", sub: "Lun · Mar · Mié · Jue", highlight: false },
-          { label: "Viernes y Sábado", hours: "12:00 – 22:30", sub: "Vie · Sáb", highlight: true },
-          { label: "Domingos y Festivos", hours: "12:00 – 20:30", sub: "Dom · Festivos", highlight: false }
-        ].map((slot, i) => (
-          <div key={slot.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '32px 24px', borderRight: i < 2 ? `1px solid rgba(26,188,156,0.12)` : 'none', backgroundColor: slot.highlight ? 'rgba(26,188,156,0.04)' : 'transparent' }}>
+          { label: "Horario General", hours: "11:00 am – 7:00 pm", sub: "Lunes a Domingo", highlight: true }
+        ].map((slot) => (
+          <div key={slot.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '32px 24px', backgroundColor: 'rgba(26,188,156,0.04)' }}>
             <span style={{ fontSize: '10px', fontWeight: '500', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(240,248,255,0.4)' }}>{slot.label}</span>
-            <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 'clamp(26px,3vw,42px)', fontWeight: '400', color: slot.highlight ? TEAL : PEARL, letterSpacing: '-0.01em', lineHeight: 1 }}>{slot.hours}</span>
-            <span style={{ fontSize: '11px', color: slot.highlight ? `rgba(26,188,156,0.6)` : 'rgba(240,248,255,0.35)', letterSpacing: '0.1em' }}>{slot.sub}</span>
+            <span style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 'clamp(20px, 2.5vw, 36px)', fontWeight: '400', color: TEAL, letterSpacing: '-0.02em', lineHeight: 1, whiteSpace: 'nowrap' }}>{slot.hours}</span>
+            <span style={{ fontSize: '11px', color: `rgba(26,188,156,0.6)`, letterSpacing: '0.1em' }}>{slot.sub}</span>
           </div>
         ))}
       </div>
@@ -400,9 +398,7 @@ function ExperienceStrip() {
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const FOOTER_HOURS = [
-  { days: "Lunes a Jueves", hours: "12:00 pm - 9:00 pm" },
-  { days: "Viernes y Sábado", hours: "12:00 pm - 10:30 pm" },
-  { days: "Domingos y Festivos", hours: "12:00 pm - 8:30 pm" },
+  { days: "Lunes a Domingo", hours: "11:00 am - 7:00 pm" },
 ];
 
 const FOOTER_LINKS = [
@@ -423,14 +419,14 @@ const RESTAURANT_SCHEMA = {
   telephone: "+573009876543",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Carrera 8 # 3-12, Centro",
+    streetAddress: "Cra. 6 #1-17, Centro",
     addressLocality: "Zipaquirá",
     addressRegion: "Cundinamarca",
     addressCountry: "CO",
   },
   servesCuisine: "Seafood",
   priceRange: "$$",
-  openingHours: "Mo-Th 12:00-21:00, Fr-Sa 12:00-22:30, Su 12:00-20:30",
+  openingHours: "Mo-Su 11:00-19:00",
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -471,8 +467,8 @@ export default async function HomePage() {
       <Footer
         restaurant={RESTAURANT_SLUG}
         brandName="Mar y Tierra Zipa"
-        address="Carrera 8 # 3-12, Centro, Zipaquirá"
-        whatsappNumber="+573009876543"
+        address="Cra. 6 #1-17, Centro, Zipaquirá"
+        whatsappNumber="+573213359659"
         hours={FOOTER_HOURS}
         links={FOOTER_LINKS}
       />

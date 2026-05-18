@@ -5,7 +5,7 @@ import { ReservationForm, NavBar, Footer } from "@repo/ui";
 import { MapPin, Clock, Phone, CheckCircle2, MessageCircle } from "lucide-react";
 
 const RESTAURANT_ID = "la-carreta-uuid";
-const WHATSAPP_NUMBER = "+573001234567";
+const WHATSAPP_NUMBER = "+573057497090";
 
 export default function ReservasPage() {
   return (
@@ -127,16 +127,16 @@ export default function ReservasPage() {
                       </h3>
                       <div className="font-['DM_Sans',sans-serif] text-[13px] text-[#5a4b3a]/70 space-y-1.5">
                         <p className="flex justify-between">
-                          <span>Lun – Jue</span>
-                          <span className="font-medium text-[#1a0f0a]/80">12:00 – 21:00</span>
+                          <span>Lun – Mié</span>
+                          <span className="font-medium text-[#1a0f0a]/80">11:30 – 21:00</span>
                         </p>
                         <p className="flex justify-between">
-                          <span>Vie – Sáb</span>
-                          <span className="font-medium text-[#1a0f0a]/80">12:00 – 22:00</span>
+                          <span>Jue – Sáb</span>
+                          <span className="font-medium text-[#1a0f0a]/80">11:30 – 22:00</span>
                         </p>
                         <p className="flex justify-between">
                           <span>Dom · Festivos</span>
-                          <span className="font-medium text-[#1a0f0a]/80">12:00 – 20:00</span>
+                          <span className="font-medium text-[#1a0f0a]/80">11:30 – 20:00</span>
                         </p>
                       </div>
                     </div>
@@ -153,7 +153,7 @@ export default function ReservasPage() {
                         Ubicación
                       </h3>
                       <p className="font-['DM_Sans',sans-serif] text-[13px] text-[#5a4b3a]/70 leading-relaxed">
-                        Calle 5 # 7-45, Centro Histórico<br />
+                        Cra. 6 # 3-26, Centro<br />
                         Zipaquirá, Cundinamarca
                       </p>
                     </div>
@@ -198,12 +198,12 @@ export default function ReservasPage() {
       <Footer
         restaurant="la-carreta"
         brandName="La Carreta"
-        address="Calle 5 # 7-45, Centro Histórico, Zipaquirá"
+        address="Cra. 6 # 3-26, Centro, Zipaquirá"
         whatsappNumber={WHATSAPP_NUMBER}
         hours={[
-          { days: "Lunes a Jueves", hours: "12:00 pm - 9:00 pm" },
-          { days: "Viernes y Sábado", hours: "12:00 pm - 10:00 pm" },
-          { days: "Domingos y Festivos", hours: "12:00 pm - 8:00 pm" },
+          { days: "Lunes a Miércoles", hours: "11:30 am - 9:00 pm" },
+          { days: "Jueves a Sábado", hours: "11:30 am - 10:00 pm" },
+          { days: "Domingos y Festivos", hours: "11:30 am - 8:00 pm" },
         ]}
       />
     </div>

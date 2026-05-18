@@ -81,12 +81,12 @@ export default async function MenuPage() {
       <Footer
         restaurant="la-carreta"
         brandName="La Carreta"
-        address="Calle 5 # 7-45, Centro Histórico, Zipaquirá"
-        whatsappNumber="+573001234567"
+        address="Cra. 6 # 3-26, Centro, Zipaquirá"
+        whatsappNumber="+573057497090"
         hours={[
-          { days: "Lunes a Jueves", hours: "12:00 pm - 9:00 pm" },
-          { days: "Viernes y Sábado", hours: "12:00 pm - 10:00 pm" },
-          { days: "Domingos y Festivos", hours: "12:00 pm - 8:00 pm" },
+          { days: "Lunes a Miércoles", hours: "11:30 am - 9:00 pm" },
+          { days: "Jueves a Sábado", hours: "11:30 am - 10:00 pm" },
+          { days: "Domingos y Festivos", hours: "11:30 am - 8:00 pm" },
         ]}
       />
     </div>

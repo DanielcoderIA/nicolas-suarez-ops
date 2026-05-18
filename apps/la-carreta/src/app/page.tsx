@@ -235,12 +235,12 @@ function InfoBand() {
               fontSize: '17px', fontWeight: '400',
               color: '#FDFAF5', lineHeight: 1.3,
               marginBottom: '3px'
-            }}>Calle 5 # 7-45</div>
+            }}>Cra. 6 # 3-26</div>
             <div style={{
               fontSize: '11px', fontWeight: '300',
               color: 'rgba(245,239,227,0.5)',
               letterSpacing: '0.04em'
-            }}>Centro Histórico · Zipaquirá</div>
+            }}>Centro · Zipaquirá</div>
           </div>
         </div>
 
@@ -289,17 +289,17 @@ function InfoBand() {
               fontSize: '17px', fontWeight: '400',
               color: '#FDFAF5', lineHeight: 1.3,
               marginBottom: '3px'
-            }}>12:00 — 21:00</div>
+            }}>11:30 am — 9:00 pm</div>
             <div style={{
               fontSize: '11px', fontWeight: '300',
               color: 'rgba(245,239,227,0.5)',
               letterSpacing: '0.04em'
-            }}>Lunes a Jueves</div>
+            }}>Lunes a Miércoles</div>
           </div>
         </div>
 
         {/* RESERVAS */}
-        <a href="tel:+573001234567"
+        <a href="tel:+573057497090"
           className="info-band-col info-band-col-3 
           info-band-reservas"
           style={{ textDecoration: 'none' }}>
@@ -353,7 +353,7 @@ function InfoBand() {
               color: '#C9973A',
               letterSpacing: '0.04em',
               lineHeight: 1.2, marginBottom: '3px'
-            }}>+57 300 123 4567</div>
+            }}>+57 305 749 7090</div>
             <div style={{
               fontSize: '11px', fontWeight: '300',
               color: 'rgba(201,151,58,0.6)',
@@ -685,24 +685,25 @@ function HorariosStrip() {
             textTransform: 'uppercase',
             color: 'rgba(245,239,227,0.4)'
           }}>
-            Lunes a Jueves
+            Lunes a Miércoles
           </span>
           <span style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(26px, 3vw, 42px)',
+            fontSize: 'clamp(20px, 2.5vw, 36px)',
             fontWeight: '300',
             color: '#FDFAF5',
-            letterSpacing: '-0.01em',
-            lineHeight: 1
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+            whiteSpace: 'nowrap'
           }}>
-            12:00 – 21:00
+            11:30 am – 9:00 pm
           </span>
           <span style={{
             fontSize: '11px',
             color: 'rgba(201,151,58,0.5)',
             letterSpacing: '0.1em'
           }}>
-            Lun · Mar · Mié · Jue
+            Lun · Mar · Mié
           </span>
         </div>
 
@@ -722,24 +723,25 @@ function HorariosStrip() {
             textTransform: 'uppercase',
             color: 'rgba(245,239,227,0.4)'
           }}>
-            Viernes y Sábado
+            Jueves a Sábado
           </span>
           <span style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(26px, 3vw, 42px)',
+            fontSize: 'clamp(20px, 2.5vw, 36px)',
             fontWeight: '300',
             color: '#C9973A',
-            letterSpacing: '-0.01em',
-            lineHeight: 1
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+            whiteSpace: 'nowrap'
           }}>
-            12:00 – 22:00
+            11:30 am – 10:00 pm
           </span>
           <span style={{
             fontSize: '11px',
             color: 'rgba(201,151,58,0.6)',
             letterSpacing: '0.1em'
           }}>
-            Vie · Sáb
+            Jue · Vie · Sáb
           </span>
         </div>
 
@@ -761,13 +763,14 @@ function HorariosStrip() {
           </span>
           <span style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(26px, 3vw, 42px)',
+            fontSize: 'clamp(20px, 2.5vw, 36px)',
             fontWeight: '300',
             color: '#FDFAF5',
-            letterSpacing: '-0.01em',
-            lineHeight: 1
+            letterSpacing: '-0.02em',
+            lineHeight: 1,
+            whiteSpace: 'nowrap'
           }}>
-            12:00 – 20:00
+            11:30 am – 8:00 pm
           </span>
           <span style={{
             fontSize: '11px',
@@ -849,23 +852,23 @@ const RESTAURANT_SCHEMA = {
   "@type": "Restaurant",
   name: "La Carreta",
   url: "https://lacarreta.co",
-  telephone: "+573001234567",
+  telephone: "+573057497090",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Calle 5 # 7-45, Centro Histórico",
+    streetAddress: "Cra. 6 # 3-26, Centro",
     addressLocality: "Zipaquirá",
     addressRegion: "Cundinamarca",
     addressCountry: "CO",
   },
   servesCuisine: "Colombian",
   priceRange: "$$",
-  openingHours: "Mo-Th 12:00-21:00, Fr-Sa 12:00-22:00, Su 12:00-20:00",
+  openingHours: "Mo-We 11:30-21:00, Th-Sa 11:30-22:00, Su 11:30-20:00",
 } as const;
 
 const FOOTER_HOURS = [
-  { days: "Lunes a Jueves", hours: "12:00 pm - 9:00 pm" },
-  { days: "Viernes y Sábado", hours: "12:00 pm - 10:00 pm" },
-  { days: "Domingos y Festivos", hours: "12:00 pm - 8:00 pm" },
+  { days: "Lunes a Miércoles", hours: "11:30 am - 9:00 pm" },
+  { days: "Jueves a Sábado", hours: "11:30 am - 10:00 pm" },
+  { days: "Domingos y Festivos", hours: "11:30 am - 8:00 pm" },
 ];
 
 const FOOTER_LINKS = [
@@ -929,8 +932,8 @@ export default async function HomePage() {
         restaurant={RESTAURANT_SLUG}
         brandName="La Carreta"
         tagline="Cocina tradicional colombiana en el corazón de Zipaquirá, Cundinamarca."
-        address="Calle 5 # 7-45, Centro Histórico, Zipaquirá"
-        whatsappNumber="+573001234567"
+        address="Cra. 6 # 3-26, Centro, Zipaquirá"
+        whatsappNumber="+573057497090"
         hours={FOOTER_HOURS}
         links={FOOTER_LINKS}
       />

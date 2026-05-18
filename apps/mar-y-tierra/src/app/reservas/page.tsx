@@ -135,12 +135,10 @@ export default function ReservasPage() {
       <Footer
         restaurant="mar-y-tierra"
         brandName="Mar y Tierra Zipa"
-        address="Carrera 8 # 3-12, Centro, Zipaquirá"
-        whatsappNumber="+573009876543"
+        address="Cra. 6 #1-17, Centro, Zipaquirá"
+        whatsappNumber="+573213359659"
         hours={[
-          { days: "Lunes a Jueves", hours: "12:00 pm - 9:00 pm" },
-          { days: "Viernes y Sábado", hours: "12:00 pm - 10:30 pm" },
-          { days: "Domingos y Festivos", hours: "12:00 pm - 8:30 pm" },
+          { days: "Lunes a Domingo", hours: "11:00 am - 7:00 pm" },
         ]}
       />
     </div>
