@@ -912,6 +912,52 @@ body {
 
 
 /* ════════════════════════════════════════════════════════════
+   NOTIFICATION BELL ANIMATIONS
+   ════════════════════════════════════════════════════════════ */
+
+@keyframes notifBadgePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 71, 87, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+}
+
+.notif-badge-pulse {
+  animation: notifBadgePulse 2s ease-in-out infinite;
+}
+
+@keyframes notifPanelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.notif-panel-enter {
+  animation: notifPanelEnter 200ms var(--ease-smooth) forwards;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE LOGOUT POPUP ANIMATION
+   ════════════════════════════════════════════════════════════ */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════
    REDUCED MOTION
    ════════════════════════════════════════════════════════════ */
 

@@ -139,25 +139,7 @@ export default async function ReservasPage() {
               </p>
             </div>
 
-            {/* CTA */}
-            <button
-              className="btn-primary"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                height: 40,
-                padding: "0 20px",
-                borderRadius: "var(--radius-lg)",
-                fontSize: "var(--text-sm)",
-                fontWeight: "var(--font-weight-semibold)",
-                letterSpacing: "0.01em",
-                flexShrink: 0,
-              }}
-            >
-              <CalendarDays size={15} />
-              Nueva reserva
-            </button>
+
           </div>
         </div>
       </div>

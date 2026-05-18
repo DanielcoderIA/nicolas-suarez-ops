@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -9,10 +10,10 @@ import {
   BookOpen,
   LogOut,
   LayoutDashboard,
-  Bell,
   ChevronRight,
 } from "lucide-react";
 import { createClient } from "../../utils/supabase/client";
+import NotificationBell from "./NotificationBell";
 
 /* ════════════════════════════════════════════════════════════════
    CONSTANTES
@@ -312,6 +313,8 @@ function Topbar({ pathname }: { pathname: string }) {
         borderBottom: "1px solid var(--border)",
         background: "rgba(8,9,10,0.55)",
         backdropFilter: "blur(var(--glass-blur))",
+        position: "relative",
+        zIndex: 50,
       }}
     >
       {/* ── Izquierda ── */}
@@ -405,41 +408,8 @@ function Topbar({ pathname }: { pathname: string }) {
           aria-hidden="true"
         />
 
-        {/* Notificaciones */}
-        <button
-          aria-label="Notificaciones"
-          style={{
-            position: "relative",
-            width: 32,
-            height: 32,
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-strong)",
-            background: "rgba(255,255,255,0.02)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            color: "var(--text-3)",
-            transition:
-              "border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast)",
-          }}
-          className="hover:!border-[var(--border-focus)] hover:!text-[var(--text-2)] hover:!bg-white/[0.04]"
-        >
-          <Bell size={13} />
-          <span
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              top: 7,
-              right: 7,
-              width: 5,
-              height: 5,
-              borderRadius: "50%",
-              background: "var(--danger)",
-              border: "1.5px solid var(--bg)",
-            }}
-          />
-        </button>
+        {/* Notificaciones — Realtime */}
+        <NotificationBell />
 
         {/* Avatar pill */}
         <div
@@ -498,7 +468,32 @@ function Topbar({ pathname }: { pathname: string }) {
    Píldora flotante contenida — no barra pegada al borde.
    El ítem activo usa fondo capsular (dl-bg) con color (dl).
    ════════════════════════════════════════════════════════════════ */
-function MobileBottomNav({ pathname }: { pathname: string }) {
+function MobileBottomNav({
+  pathname,
+  onLogout,
+}: {
+  pathname: string;
+  onLogout: () => void;
+}) {
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close menu on outside tap
+  useEffect(() => {
+    if (!showMenu) return;
+    const handler = (e: MouseEvent | TouchEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("touchstart", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchstart", handler);
+    };
+  }, [showMenu]);
+
   return (
     <nav
       className="md:hidden"
@@ -525,6 +520,158 @@ function MobileBottomNav({ pathname }: { pathname: string }) {
           boxShadow: "var(--shadow-4)",
         }}
       >
+        {/* Profile / Logout button */}
+        <div ref={menuRef} style={{ position: "relative" }}>
+          <button
+            onClick={() => setShowMenu((prev) => !prev)}
+            aria-label="Perfil y opciones"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 3,
+              padding: "7px 16px",
+              borderRadius: "var(--radius-xl)",
+              background: showMenu ? "var(--dl-bg)" : "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: showMenu ? "var(--dl)" : "var(--text-3)",
+              minWidth: 58,
+              transition:
+                "background var(--dur-fast), color var(--dur-fast)",
+            }}
+          >
+            <div
+              style={{
+                width: 18,
+                height: 18,
+                borderRadius: "50%",
+                background: showMenu
+                  ? "var(--dl)"
+                  : "linear-gradient(135deg, var(--dl), var(--accent))",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 7,
+                fontWeight: 800,
+                color: showMenu ? "#0c0e12" : "#fff",
+                lineHeight: 1,
+              }}
+            >
+              NS
+            </div>
+            <span
+              style={{
+                fontSize: 9,
+                fontWeight: "var(--font-weight-bold)",
+                textTransform: "uppercase",
+                letterSpacing: "var(--tracking-wider)",
+                opacity: showMenu ? 1 : 0.45,
+                lineHeight: 1,
+              }}
+            >
+              Perfil
+            </span>
+          </button>
+
+          {/* Popup menu */}
+          {showMenu && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "calc(100% + 12px)",
+                left: "50%",
+                transform: "translateX(-50%)",
+                minWidth: 180,
+                background: "rgba(16,18,22,0.96)",
+                backdropFilter: "blur(20px) saturate(1.6)",
+                border: "1px solid var(--border-strong)",
+                borderRadius: "var(--radius-lg)",
+                boxShadow: "0 -8px 32px rgba(0,0,0,0.5)",
+                overflow: "hidden",
+                animation: "slideUp 200ms ease-out",
+              }}
+            >
+              {/* User info */}
+              <div
+                style={{
+                  padding: "14px 16px 12px",
+                  borderBottom: "1px solid var(--border)",
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: "50%",
+                      background: "linear-gradient(135deg, var(--dl), var(--accent))",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 9,
+                      fontWeight: 800,
+                      color: "#fff",
+                      flexShrink: 0,
+                    }}
+                  >
+                    NS
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        fontSize: "var(--text-sm)",
+                        fontWeight: "var(--font-weight-semibold)",
+                        color: "var(--text)",
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      Nicolás S.
+                    </p>
+                    <p
+                      style={{
+                        fontSize: 10,
+                        color: "var(--text-4)",
+                        letterSpacing: "0.03em",
+                        marginTop: 2,
+                      }}
+                    >
+                      Chef Ejecutivo
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Logout action */}
+              <button
+                onClick={() => {
+                  setShowMenu(false);
+                  onLogout();
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  width: "100%",
+                  padding: "12px 16px",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--danger)",
+                  fontSize: "var(--text-sm)",
+                  fontWeight: "var(--font-weight-semibold)",
+                  textAlign: "left",
+                  transition: "background var(--dur-fast)",
+                }}
+                className="hover:!bg-[var(--danger-bg)]"
+              >
+                <LogOut size={14} style={{ flexShrink: 0 }} />
+                Cerrar sesión
+              </button>
+            </div>
+          )}
+        </div>
+
         {NAV_LINKS.map(({ href, name, icon: Icon }) => {
           const isActive = pathname === href;
           return (
@@ -613,7 +760,7 @@ export default function DashboardLayout({
         </main>
       </div>
 
-      <MobileBottomNav pathname={pathname} />
+      <MobileBottomNav pathname={pathname} onLogout={logout} />
     </div>
   );
 }
