@@ -660,24 +660,9 @@ function HorariosStrip() {
       </div>
 
       {/* Grid horarios */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        width: '100%',
-        maxWidth: '860px',
-        zIndex: 1,
-        border: '1px solid rgba(201,151,58,0.12)',
-        borderRadius: '2px'
-      }}>
+      <div className="grid grid-cols-1 md:grid-cols-3 w-full max-w-[860px] relative z-10 border border-[#C9973A]/12 rounded-[2px]">
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '32px 24px',
-          borderRight: '1px solid rgba(201,151,58,0.12)'
-        }}>
+        <div className="flex flex-col items-center gap-[10px] py-8 px-6 border-b md:border-b-0 md:border-r border-[#C9973A]/12">
           <span style={{
             fontSize: '10px',
             fontWeight: '500',
@@ -707,15 +692,7 @@ function HorariosStrip() {
           </span>
         </div>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '32px 24px',
-          borderRight: '1px solid rgba(201,151,58,0.12)',
-          backgroundColor: 'rgba(201,151,58,0.04)'
-        }}>
+        <div className="flex flex-col items-center gap-[10px] py-8 px-6 border-b md:border-b-0 md:border-r border-[#C9973A]/12 bg-[#C9973A]/[0.04]">
           <span style={{
             fontSize: '10px',
             fontWeight: '500',
@@ -745,13 +722,7 @@ function HorariosStrip() {
           </span>
         </div>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '32px 24px'
-        }}>
+        <div className="flex flex-col items-center gap-[10px] py-8 px-6">
           <span style={{
             fontSize: '10px',
             fontWeight: '500',

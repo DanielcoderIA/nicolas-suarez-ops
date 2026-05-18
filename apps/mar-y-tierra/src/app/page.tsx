@@ -214,7 +214,7 @@ function StorySection() {
 
           {/* Title */}
           <h2 style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 'clamp(36px, 4.5vw, 56px)', fontWeight: '400', lineHeight: '1.08', color: OCEAN, marginBottom: '32px' }}>
-            Un lugar{" "}
+            Un ambiente{" "}
             <em style={{ fontStyle: 'italic', color: TEAL, fontWeight: '400' }}>tropical</em>
             <br />en medio de{" "}
             <em style={{ fontStyle: 'italic', color: TEAL, fontWeight: '400' }}>la sabana</em>
