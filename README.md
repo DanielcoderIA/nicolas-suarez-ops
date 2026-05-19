@@ -2,6 +2,11 @@
 
 Plataforma unificada para la gestión de 3 restaurantes en Zipaquirá, diseñada para operar de forma autónoma mientras Nicolás Suárez (Chef y Gerente) está en cocina.
 
+## 📚 Documentación Técnica Completa
+
+Para conocer todos los detalles de la arquitectura, APIs, base de datos, seguridad, flujos de n8n y operaciones del sistema, consulta la nueva documentación técnica exhaustiva:
+👉 **[Ver Índice de Documentación Completa](./docs/DOCUMENTATION.md)**
+
 ## 🏗️ Arquitectura del Ecosistema
 
 El proyecto es un **Monorepo gestionado con Turborepo** que contiene 5 aplicaciones Next.js 14 (App Router) y paquetes compartidos:
